@@ -23,8 +23,8 @@ def encoder(x):
     hidden  = Dense(units=128, activation='relu')(flat)
 
     # Mean and Log Variance of latent space
-    mean    = Dense(units=4)(hidden)
-    log_var = Dense(units=4)(hidden)
+    mean    = Dense(units=2)(hidden)
+    log_var = Dense(units=2)(hidden)
     return mean, log_var
 
 

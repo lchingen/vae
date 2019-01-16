@@ -1,7 +1,8 @@
+import os
 from keras.layers import Input
 from keras.callbacks import TensorBoard
 from keras import backend as K
-from keras.losses import mse
+from keras.models import load_model
 from keras.optimizers import Adam
 
 from helper import *
@@ -11,7 +12,7 @@ if __name__ == '__main__':
     # Instantiate model
     x = Input(shape=(32,32,3))
     mean, log_var = encoder(x)
-    z = Lambda(sampler, output_shape=(4,))([mean, log_var])
+    z = Lambda(sampler, output_shape=(2,))([mean, log_var])
     y = decoder(z)
 
     vae_model = Model(x, y)
@@ -25,6 +26,9 @@ if __name__ == '__main__':
     vae_model.compile(optimizer='adam')
     vae_model.summary()
 
+    if os.path.exists('./models/trained_vae_weights.h5'):
+        vae_model.load_weights('./models/trained_vae_weights.h5')
+
     # Fetch dataset
     x_train, x_test = load_dataset('cifar10')
 
@@ -37,4 +41,15 @@ if __name__ == '__main__':
                   callbacks=[TensorBoard(log_dir='./logs')])
 
     # Save model
-    vae_model.save('./models/trained_vae.h5')
+    if not os.path.exists('./models'):
+        os.makedirs('models')
+    vae_model.save_weights('./models/trained_vae_weights.h5')
+
+    # Test inference
+    x = x_test[100]
+    #x = x[:,:,::-1]
+    x = x[None,...]
+    generated = vae_model.predict(x)
+
+    compare_result(x, generated)
+    rmse(generated, x)
