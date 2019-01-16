@@ -31,3 +31,16 @@ def compare_result(old, new):
     plt.imshow(new)
     plt.show()
 
+def show_all(x_org, x_gen, test_size):
+    f = plt.figure()
+    x_grid_size = int(np.sqrt(test_size))
+    y_grid_size = int(np.sqrt(test_size))
+    assert x_grid_size == y_grid_size # Just to make my life easy
+    for ii in range(x_grid_size):
+        for jj in range(y_grid_size):
+            org = np.squeeze(x_org[x_grid_size*ii+jj])
+            gen = np.squeeze(x_gen[x_grid_size*ii+jj])
+            concat = np.hstack((org, gen))
+            f.add_subplot(y_grid_size, x_grid_size, ii*x_grid_size+jj+1)
+            plt.imshow(concat)
+    plt.show()

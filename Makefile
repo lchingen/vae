@@ -3,8 +3,8 @@
 HOSTNAME=$(shell cat /proc/sys/kernel/hostname)
 
 clean:
-	@rm ./logs/*
-	@rm ./models/*
+	@rm -f ./logs/*
+	@rm -f ./models/*
 
 tsb:
 	@tensorboard --logdir=./logs

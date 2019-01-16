@@ -1,5 +1,6 @@
 import os
 import sys
+import cv2
 from keras.layers import Input
 from keras.callbacks import TensorBoard
 from keras.models import load_model
@@ -24,12 +25,13 @@ if __name__ == '__main__':
         print('Weights not found...')
         sys.exit(0)
 
-    # Fetch dataset
-    _, x_test = load_dataset('cifar10')
+    # Read custom image
+    x = cv2.imread('./dog.jpg')
+    x = cv2.resize(x, (32,32))
+    x = x[:,:,::-1]
+    x = x / 255.0
+    x = x[None,...]
 
     # Test generation
-    test_size = 25
-    x_org = x_test[:test_size]
-    x_gen = vae_model.predict(x_org)
-
-    show_all(x_org, x_gen, test_size)
+    x_gen = vae_model.predict(x)
+    compare_result(x, x_gen)
