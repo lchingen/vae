@@ -1,6 +1,7 @@
 # Variational Autoencoder (VAE)
 ### How To Run
-```
+
+```make
 # Training/Testing
 make train
 make test
@@ -29,7 +30,7 @@ In addition, given proper normalization, the essence of VAE is striking the bala
 |100      |0.01   |~64          |~1.0   |
 |100      |0.005  |~85         |~0.8   |
 
-![1](./imgs/z_100_b_1e-1_epoch_50.png){width=80%}
+![1](./imgs/z_100_b_1e-1_epoch_50.png){width=50%}
 **Fig. 1: Z-dim = 100; Beta = 0.1 (poor reconstruction, good generation)**
-![2](./imgs/z_100_b_5e-3_epoch_50.png){width=80%}
+![2](./imgs/z_100_b_5e-3_epoch_50.png){width=50%}
 **Fig. 1: Z-dim = 100; Beta = 0.005 (good reconstruction, poor generation)**
