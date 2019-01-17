@@ -3,16 +3,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+def rmse(x, y):
+    assert x.shape == y.shape
+    N = x.size
+    print('RMSE:{}'.format(np.sqrt(np.sum((x-y)**2) / N)))
+
 def load_dataset(dataset_name='mnist'):
     dataset = getattr(tf.keras.datasets, dataset_name)
     (x_train, _), (x_test, _) = dataset.load_data()
     x_train, x_test = (x_train / 255.0), (x_test / 255.0)
     return x_train, x_test
-
-def rmse(x, y):
-    assert x.shape == y.shape
-    N = x.size
-    print('RMSE:{}'.format(np.sqrt(np.sum((x-y)**2) / N)))
 
 def show_img(img, title=None):
     img = np.squeeze(img)
@@ -41,6 +41,9 @@ def show_all(x_org, x_gen, test_size):
             org = np.squeeze(x_org[x_grid_size*ii+jj])
             gen = np.squeeze(x_gen[x_grid_size*ii+jj])
             concat = np.hstack((org, gen))
-            f.add_subplot(y_grid_size, x_grid_size, ii*x_grid_size+jj+1)
+            ax = f.add_subplot(y_grid_size, x_grid_size, ii*x_grid_size+jj+1)
+            ax.set_xticks([])
+            ax.set_yticks([])
             plt.imshow(concat)
+    plt.tight_layout()
     plt.show()

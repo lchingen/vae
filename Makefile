@@ -8,4 +8,9 @@ clean:
 
 tsb:
 	@tensorboard --logdir=./logs
-	@xdg-open http://$(HOSTNAME):6006
+
+train:
+	@make clean && python3 train.py --num_epochs 50 --batch_size 128 --dataset cifar10 && make test
+
+test:
+	@python3 test.py
