@@ -30,8 +30,8 @@ In addition, given proper normalization, the essence of VAE is striking the bala
 |100      |0.01   |~64          |~1.0   |
 |100      |0.005  |~85         |~0.8   |
 
-![1](./imgs/z_100_b_1e-1_epoch_50.png){:height="50%" width="50%"}
-<img src="./imgs/z_100_b_1e-1_epoch_50.png" width="100" height="100">
+<img src="./imgs/z_100_b_1e-1_epoch_50.png" width="800" height="800">
 **Fig. 1: Z-dim = 100; Beta = 0.1 (poor reconstruction, good generation)**
-![2](./imgs/z_100_b_5e-3_epoch_50.png){:height="50%" width="50%"}
+
+<img src="./imgs/z_100_b_5e-3_epoch_50.png" width="800" height="800">
 **Fig. 1: Z-dim = 100; Beta = 0.005 (good reconstruction, poor generation)**
