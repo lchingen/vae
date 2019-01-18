@@ -1,5 +1,6 @@
-import tensorflow as tf
 import numpy as np
+import pickle
+import tensorflow as tf
 import matplotlib.pyplot as plt
 
 
@@ -47,3 +48,10 @@ def show_all(x_org, x_gen, test_size):
             plt.imshow(concat)
     plt.tight_layout()
     plt.show()
+
+
+def load_custom_dataset(dataset='gt-face-db'):
+    path = './datasets/{}/{}.npy'.format(dataset, dataset)
+    x = np.load(path)
+    x = x / 255.0
+    return x

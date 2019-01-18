@@ -114,7 +114,7 @@ def Decoder(z, is_training):
                               kernel_size=[3,3],
                               strides=[1,1],
                               padding='same',
-                              act_fn='lrelu',
+                              act_fn='sigmoid',
                               is_training=is_training,
                               is_transpose=True)
         return tconv_2

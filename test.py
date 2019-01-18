@@ -31,7 +31,7 @@ def infer(sample_size, dataset):
         prediction = list(estimator.predict(input_fn=pred_input_fn))
         sess.close()
 
-    x_gen = np.zeros([sample_size, 32, 32, 3])
+    x_gen = np.zeros([sample_size] + input_dim)
     for ii in range(sample_size):
         x_gen[ii] = prediction[ii]
 
