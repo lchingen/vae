@@ -6,7 +6,7 @@ make train
 make test
 ```
 
-### Implementation Notes
+### VAE Implementation Notes
 <p align="justify">
 The most challenging part regarding VAE implementation (training) is: 
 
@@ -43,3 +43,6 @@ In addition, given proper normalization, the essence of VAE is striking the bala
 <img src="./imgs/z_100_b_5e-3_epoch_50.png" width="500" height="500">
 
 **Fig. 2: Z-dim = 100; Beta = 0.005 (good reconstruction, poor generation)**
+
+### TF Model Implementation Notes
+The model and training/inference pipeline is constructed using the TF Data API, where the model and associated functions are abstracted as estimators. Note that for achieving good inference performace, the trained model is exported as a TF serving API and called by the predictor for inference under eager execution.

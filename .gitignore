@@ -4,3 +4,4 @@ models/
 __pycache__
 tags
 gt-face-impl/
+db/
