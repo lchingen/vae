@@ -12,7 +12,7 @@ build:
 	@python3 build.py
 
 train:
-	@make clean && python3 train.py
+	@python3 train.py
 
 test:
 	@python3 test.py

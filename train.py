@@ -17,5 +17,5 @@ def main(unused_argv):
 
 
 if __name__ == '__main__':
-    tf.app.flags.DEFINE_string('mode', 'TRAIN')
+    tf.app.flags.DEFINE_string('mode', 'TRAIN','')
     tf.app.run()

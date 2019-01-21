@@ -6,11 +6,14 @@ from pathlib import Path
 from config import *
 from helper import *
 from utils import create_dataset
+from model_fn import *
 
 tf.enable_eager_execution()
 
 
 def main(unused_argv):
+    # Export model
+    export_tf_model(FLAGS.export_path)
     # Find latest frozen pb
     subdirs = [x for x in Path(FLAGS.export_path + '/frozen_pb').iterdir()
                if x.is_dir() and 'temp' not in str(x)]
@@ -27,7 +30,7 @@ def main(unused_argv):
 
     # Eager execution for obtaining batch data from dataset
     x_val = iterator.get_next().numpy()
-    z_val = np.zeros([x_val.shape[0],128])
+    z_val = np.zeros([x_val.shape[0], z_dim])
     dict_in = {'x': x_val, 'z':z_val}
 
     # Make predictions and fetch results from output dict
@@ -36,7 +39,7 @@ def main(unused_argv):
     y = predictions['y']
 
     # Show all source v.s. generated results
-    show_all(x, y, x.shape[0])
+    compare_all(x, y, x.shape[0])
 
 
 if __name__ == '__main__':

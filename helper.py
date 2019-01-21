@@ -24,7 +24,7 @@ def show_img(img, title=None):
     plt.show()
 
 
-def compare_result(old, new):
+def compare(old, new):
     new, old = np.squeeze(new), np.squeeze(old)
     f = plt.figure()
 
@@ -36,7 +36,7 @@ def compare_result(old, new):
     plt.show()
 
 
-def show_all(x_org, x_gen, test_size):
+def compare_all(x_org, x_gen, test_size):
     f = plt.figure()
     x_grid_size = int(np.sqrt(test_size))
     y_grid_size = int(np.sqrt(test_size))
@@ -54,7 +54,25 @@ def show_all(x_org, x_gen, test_size):
     plt.show()
 
 
-def load_custom_dataset(dataset='gt-face-db'):
+def show_all(x, size):
+    f = plt.figure()
+    x_grid_size = 8
+    y_grid_size = int(np.ceil(x_grid_size))
+
+    for ii in range(y_grid_size):
+        for jj in range(x_grid_size):
+            try:
+                ax = f.add_subplot(y_grid_size, x_grid_size, ii*y_grid_size+jj+1)
+                ax.set_xticks([])
+                ax.set_yticks([])
+                plt.imshow(x[ii*y_grid_size+jj])
+            except:
+                break
+    plt.tight_layout()
+    plt.show()
+
+
+def load_custom_dataset(dataset):
     path = './datasets/{}/{}.npy'.format(dataset, dataset)
     x = np.load(path)
     x = x / 255.0

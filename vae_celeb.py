@@ -165,6 +165,8 @@ def Vae(x, z, mode):
     epsilon = tf.random_normal(tf.shape(z_mean))
     if mode == 'TRAIN' or mode =='TEST':
         z = z_mean + tf.exp(z_log_var) * epsilon
+    elif mode == 'TEST':
+        z = z_mean
 
     # Decode
     y = Decoder(z, is_training)
