@@ -73,7 +73,7 @@ def augment_features(img):
 def create_dataset(path, buffer_size, batch_size, num_epochs):
     # NOTE: change the extract_feature reshape size for different datasets
     with tf.device('cpu:0'):
-        dataset = tf.data.TFRecordDataset('./db/train.tfrecords')\
+        dataset = tf.data.TFRecordDataset(path)\
                   .shuffle(buffer_size)\
                   .repeat(num_epochs)\
                   .map(extract_features, num_parallel_calls=4)\
@@ -81,3 +81,20 @@ def create_dataset(path, buffer_size, batch_size, num_epochs):
                   .batch(batch_size)\
                   .prefetch(1)
         return dataset
+
+
+def train_input_fn_from_tfr():
+    return lambda: create_dataset(path=FLAGS.train_path,
+                                  buffer_size=FLAGS.buffer_size,
+                                  batch_size=FLAGS.batch_size,
+                                  num_epochs=FLAGS.num_epochs)
+
+'''
+from tensorflow.python.estimator.inputs import numpy_io
+def train_input_fn_from_numpy():
+    x_train, _ = load_dataset(dataset)
+    train_input_fn = tf.estimator.inputs.numpy_input_fn(x_train,
+                                                        shuffle=True,
+                                                        batch_size=batch_size,
+                                                        num_epochs=num_epochs)
+'''

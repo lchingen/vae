@@ -17,5 +17,8 @@ train:
 test:
 	@python3 test.py
 
+gen:
+	@python3 generate.py
+
 custom:
 	@python3 custom.py

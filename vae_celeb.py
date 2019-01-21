@@ -151,13 +151,21 @@ def Decoder(z, is_training):
     return act_0
 
 
-def Vae(inputs, is_training=True):
+def Vae(x, z, mode):
+    # Training flag for BN
+    if mode == 'TRAIN':
+        is_training = True
+    else:
+        is_training = False
+
     # Encode
-    z_mean, z_log_var = Encoder(inputs, is_training)
-    # Sample
+    z_mean, z_log_var = Encoder(x, is_training)
+
+    # Sample (skip if only testing decoder)
     epsilon = tf.random_normal(tf.shape(z_mean))
-    z = z_mean + tf.exp(z_log_var) * epsilon if (
-        is_training) else z_mean
+    if mode == 'TRAIN' or mode =='TEST':
+        z = z_mean + tf.exp(z_log_var) * epsilon
+
     # Decode
     y = Decoder(z, is_training)
     return y, z_mean, z_log_var
