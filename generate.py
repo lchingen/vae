@@ -40,7 +40,8 @@ def main(unused_argv):
     predictions = predict_fn(dict_in)
     x = predictions['x']
     y = predictions['y']
-    z = predictions['z']
+    #mu = predictions['z_mean']
+    #sigma = predictions['z_log_var']
 
     show_all(y, N)
 

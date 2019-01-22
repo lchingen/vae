@@ -20,7 +20,7 @@ def model_fn(features, mode):
     total_loss = tf.reduce_mean(rec_loss + beta*kl_loss)
 
     # Outputs
-    predictions = {'x': x, 'y': y, 'z':z}
+    predictions = {'x': x, 'y': y, 'mu':z_mean, 'sigma':z_log_var}
 
     # Mode selection
     if mode == tf.estimator.ModeKeys.PREDICT:

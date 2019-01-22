@@ -1,24 +1,22 @@
 import numpy as np
-import cv2
 import tensorflow as tf
 from tensorflow.contrib import predictor
 from pathlib import Path
 
-from tensorflow.python.estimator.inputs import numpy_io
-from test import serving_input_fn, export_tf_model
-from train import model_fn
 from config import *
 from helper import *
+from utils import *
+from model_fn import *
 
-tf.logging.set_verbosity(tf.logging.INFO)
 tf.enable_eager_execution()
 
 
-if __name__ == '__main__':
+def main(unused_argv):
+    # Export model_fn to only use decoder
+    export_tf_model(FLAGS.export_path)
+
     # Find latest frozen pb
-    export_path = './logs/frozen_pb'
-    export_tf_model(export_path)
-    subdirs = [x for x in Path(export_path).iterdir()
+    subdirs = [x for x in Path(FLAGS.export_path + '/frozen_pb').iterdir()
                if x.is_dir() and 'temp' not in str(x)]
     latest = str(sorted(subdirs)[-1])
 
@@ -26,20 +24,17 @@ if __name__ == '__main__':
     predict_fn = predictor.from_saved_model(latest)
 
     # Read image
-    x = cv2.imread('./imgs/alex.jpg')
-    x = cv2.resize(x, (input_dim[0], input_dim[1]),
-                   interpolation=cv2.INTER_CUBIC)
-    x = x[:,:,::-1]
-    x = x / 255.0
-    x = x[None,...]
-
-    # Put in an input dict as per predict_fn input definition
-    x = {'input': x}
+    x  = load_img('./imgs/alex.jpg')[None] / 255.0
+    dict_in = {'x': x, 'z': np.zeros(z_dim)[None]}
 
     # Make predictions and fetch results from output dict
-    predictions = predict_fn(x)
-    x_src = predictions['x_src']
-    x_gen = predictions['x_gen']
+    predictions = predict_fn(dict_in)
+    x = predictions['x']
+    y = predictions['y']
 
     # Show all source v.s. generated results
-    compare_result(x_src, x_gen)
+    compare(x, y)
+
+if __name__ == '__main__':
+    tf.app.flags.DEFINE_string('mode', 'TEST', 'TRAIN/TEST')
+    tf.app.run()

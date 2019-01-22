@@ -5,3 +5,5 @@ __pycache__
 tags
 gt-face-impl/
 db/
+imgs/gif_img/*
+visualization/
