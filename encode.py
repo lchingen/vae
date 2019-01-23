@@ -38,7 +38,7 @@ def make_gif():
     for f in fl:
         images.append(imageio.imread(f))
 
-    imageio.mimsave('./imgs/latent_interpolation.gif', images, fps=60)
+    imageio.mimsave('./imgs/gif.gif', images, fps=60)
 
 
 def latent_interpolation(predict_fn):

@@ -24,17 +24,20 @@ def main(unused_argv):
     predict_fn = predictor.from_saved_model(latest)
 
     # Read image
-    x  = load_img('./imgs/human.jpg')[None] / 255.0
+    x  = load_img('./imgs/end.jpg')[None] / 255.0
     dict_in = {'x': x, 'z': np.zeros(z_dim)[None]}
 
     # Make predictions and fetch results from output dict
-    predictions = predict_fn(dict_in)
-    x = predictions['x']
-    y = predictions['y']
+    z = predict_fn(dict_in)['mu']
+    z_shift = np.roll(z, 1, axis = 1)
 
-    # Show all source v.s. generated results
-    compare(x, y)
+    z_val = np.vstack((z, z_shift))
+
+    dict_in = {'x': np.zeros(input_dim)[None], 'z': z_val}
+    y, y_shift = predict_fn(dict_in)['y']
+
+    compare(y, y_shift)
 
 if __name__ == '__main__':
-    tf.app.flags.DEFINE_string('mode', 'TEST', 'TRAIN/TEST')
+    tf.app.flags.DEFINE_string('mode', None, 'TRAIN/TEST')
     tf.app.run()

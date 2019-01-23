@@ -15,8 +15,8 @@ def model_fn(features, mode):
     y, z_mean, z_log_var = Vae(x, z, FLAGS.mode)
 
     # Loss function
-    rec_loss = tf.reduce_sum(tf.squared_difference(x, y)) / rec_norm
-    kl_loss = -0.5 * tf.reduce_sum(1 + z_log_var - tf.square(z_mean) - tf.exp(z_log_var)) / kl_norm
+    rec_loss = tf.reduce_sum(tf.squared_difference(x, y)) # / rec_norm
+    kl_loss = -0.5 * tf.reduce_sum(1 + z_log_var - tf.square(z_mean) - tf.exp(z_log_var)) # / kl_norm
     total_loss = tf.reduce_mean(rec_loss + beta*kl_loss)
 
     # Outputs

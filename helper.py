@@ -57,7 +57,7 @@ def compare_all(x_org, x_gen, test_size):
 def show_all(x, size):
     f = plt.figure()
     x_grid_size = 8
-    y_grid_size = int(np.ceil(x_grid_size))
+    y_grid_size = int(np.ceil(x_grid_size)) #TODO: BUF FIX size/...
 
     for ii in range(y_grid_size):
         for jj in range(x_grid_size):
