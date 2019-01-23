@@ -54,18 +54,18 @@ def compare_all(x_org, x_gen, test_size):
     plt.show()
 
 
-def show_all(x, size):
+def show_all(x):
     f = plt.figure()
     x_grid_size = 8
-    y_grid_size = int(np.ceil(x_grid_size)) #TODO: BUF FIX size/...
+    y_grid_size = int(np.ceil(x.shape[0]/x_grid_size))
 
     for ii in range(y_grid_size):
         for jj in range(x_grid_size):
             try:
-                ax = f.add_subplot(y_grid_size, x_grid_size, ii*y_grid_size+jj+1)
+                ax = f.add_subplot(y_grid_size, x_grid_size, ii*x_grid_size+jj+1)
                 ax.set_xticks([])
                 ax.set_yticks([])
-                plt.imshow(x[ii*y_grid_size+jj])
+                plt.imshow(x[ii*x_grid_size+jj])
             except:
                 break
     plt.tight_layout()
