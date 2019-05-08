@@ -18,7 +18,7 @@ Latent space dimension (z-dim) corresponds to the compression ratio of the encod
 </p>
 
 <p align="justify">
-The cost function of the VAE constitutes of the reconstruction (R) loss and the KL-Divergence Loss (KLD). Often we find the training result to be notoriously difficult to evaluate. The main reason is the numerical balance between R and KLD loss. If these two losses are not **normalized** properly to exhibit similar magnitude, the training process equivalently gives rise to whatever loss that has a higher order of magnitude, causing the result of the VAE training to be undesirable. Provided with some heuristic, a rule-of-thumb for the loss function as well as the normalization is summarized in the following:
+The cost function of the VAE constitutes of the reconstruction (R) loss and the KL-Divergence Loss (KLD). Often we find the training result to be notoriously difficult to evaluate. The main reason is the numerical balance between R and KLD loss. If these two losses are not normalized properly to exhibit similar magnitude, the training process equivalently gives rise to whatever loss that has a higher order of magnitude, causing the result of the VAE training to diverge. Provided with some heuristic, a rule-of-thumb for the loss function as well as the normalization is summarized in the following:
 </p>
 
 	1) R-loss: take sum of squared error and normalize by input-dim (i.e. HxWxC)
