@@ -14,7 +14,7 @@ The most challenging part regarding VAE implementation (training) is:
 	2) The balance between reconstruction and generation
 	
 
-Latent space dimension (z-dim) corresponds to the compression ratio of the encoder (e.g. 32x32x3 input image with z-dim of 100 corresponds to (32x32x3)/100 ~ 22x compression), therefore, if z-dim is too small, meaning that the compression is too high, the representation (reconstruction and generation) capability of the VAE is limited .
+Latent space dimension (z-dim) corresponds to the compression ratio of the encoder (e.g. 32x32x3 input image with z-dim of 100 corresponds to (32x32x3)/100 ~ 22x compression), therefore, if z-dim is too small, meaning that the compression is too high, the representation (reconstruction and generation) capability of the VAE is limited.
 </p>
 
 <p align="justify">
@@ -45,10 +45,14 @@ In addition, given proper normalization, the essence of VAE is striking the bala
 **Fig. 2: Z-dim = 100; Beta = 0.005 (good reconstruction, poor generation)**
 
 ### Latent Space Interpolation
+<p align="justify">
 After training the VAE, it allows us to extract the latent space embeddings of two images and perform interpolation to achieve transformation. Fundamentally this is similar to doing vector arithmetic in the latent space. Specifically, two inputs are encoded by the trained VAE encoder to produce their respective latent embeddings, then linear interpolation is applied for multiple steps on all dimensions of the latent embedding until the begin vector equals the end vector. All steps along the way are collected and sent to tyhe VAE decoder to generate intermediate results. The following GIF illustrates a concrete example:
+</p>
 
 <img src="./imgs/latent_interpolation.gif">
 
 
 ### TF Model Implementation Notes
+<p align="justify">
 The model and training/inference pipeline is constructed using the TF Data API, where the model and associated functions are abstracted as estimators. Note that for achieving good inference performace, the trained model is exported as a TF serving API and called by the predictor for inference under eager execution.
+</p>
